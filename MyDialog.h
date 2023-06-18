@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QString>
 #include <QSpinBox>
+#include <QObject>
 
 // Json 解析
 #include <QApplication>

@@ -17,7 +17,7 @@
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
-    m_status(new QLabel),
+    // m_status(new QLabel),
     // m_console(new Console),
     m_settings(new SettingsDialog),
     m_serial(new QSerialPort(this)) {
@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget* parent) :
     m_ui->actionDisconnect->setEnabled(false);
     m_ui->actionQuit->setEnabled(true);
     m_ui->actionConfigure->setEnabled(true);
-    m_ui->statusBar->addWidget(m_status);
+    // m_ui->statusBar->addWidget(m_status);
     initActionsConnections();
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, SIGNAL(readyRead()), this, SLOT(readData()));
@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget* parent) :
     // connect(m_console, &Console::getData, this, &MainWindow::writeData);
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(handletimeout()));
+    getCurrentAvailabel();
 }
 
 void MainWindow::handletimeout() {
@@ -133,7 +134,7 @@ void MainWindow::initActionsConnections() {
 }
 
 void MainWindow::showStatusMessage(const QString& message) {
-    m_status->setText(message);
+    // m_status->setText(message);
 }
 
 void MainWindow::sendTest() {
@@ -184,6 +185,63 @@ void MainWindow::getUserInfo(QString cardID) {
             // m_console->putData("\n" + responseData);
             MyDialog dialog(jsonObj);
             dialog.exec();
+
+        }
+        else {
+            QMessageBox::information(nullptr, "提示", "请求失败");
+            // m_console->putData(QString("请求失败"));
+        }
+        reply->deleteLater();
+        // 继续接收
+        m_serial->open(QIODevice::ReadWrite);
+        getCurrentAvailabel();
+        });
+}
+
+void MainWindow::getCurrentAvailabel() {
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://localhost:8084/charger/findAllWhereUsing"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject json;
+    QJsonDocument jsonDoc(json);
+    QByteArray postData = jsonDoc.toJson(QJsonDocument::Compact);
+    QNetworkReply* reply = manager->post(request, postData);
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QString responseData = reply->readAll();
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(responseData.toUtf8());
+            QJsonObject jsonObj = jsonDoc.object();
+            // QString data = jsonObj.value("data").toString();
+            // QMessageBox::information(nullptr, "提示", data);
+            if (responseData.contains("port1")) {
+
+                m_ui->label_port1->setText("1号剩余充电时长: " + QString(jsonObj.value("port1").toInt()) + "分钟");
+            }
+            else {
+
+            }
+            if (responseData.contains("port2")) {
+
+                m_ui->label_port2->setText("2号剩余充电时长: " + QString(jsonObj.value("port2").toInt()) + "分钟");
+            }
+            else {
+
+            }
+            if (responseData.contains("port3")) {
+
+                m_ui->label_port3->setText("3号剩余充电时长: " + QString(jsonObj.value("port3").toInt()) + "分钟");
+            }
+            else {
+
+            }
+            if (responseData.contains("port4")) {
+
+                m_ui->label_port4->setText("4号剩余充电时长: " + QString(jsonObj.value("port4").toInt()) + "分钟");
+            }
+            else {
+
+            }
         }
         else {
             QMessageBox::information(nullptr, "提示", "请求失败");

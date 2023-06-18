@@ -59,6 +59,7 @@ private:
 private:
     void showStatusMessage(const QString& message);
     void getUserInfo(QString cardID);   // 网络请求
+    void getCurrentAvailabel();         // 网络请求
 
     Ui::MainWindow* m_ui = nullptr;
     QLabel* m_status = nullptr;

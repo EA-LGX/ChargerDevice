@@ -58,10 +58,6 @@ void HttpDemo::getData(QString url) {
     QNetworkRequest request;
     request.setUrl(QUrl(url));
 
-    // QByteArray postData;
-    // postData.append("key1=value1");
-    // postData.append("&key2=value2");
-    // QNetworkReply* reply = manager->post(request,postData);
     QNetworkReply* reply = manager->get(request);
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {

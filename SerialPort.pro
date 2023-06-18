@@ -7,13 +7,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     settingsdialog.cpp \
-    console.cpp 
+    console.cpp \
+    battery.cpp 
 
 HEADERS += \
     mainwindow.h \
     settingsdialog.h \
     console.h \
-    MyDialog.h
+    MyDialog.h \
+    battery.h
 
 FORMS += \
     mainwindow.ui \

@@ -12,11 +12,10 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -37,13 +36,16 @@ public:
     QAction *actionTimer;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
+    QLabel *label_3;
+    QLabel *label_port1;
+    QLabel *label_port2;
+    QLabel *label_port3;
+    QLabel *label_port4;
     QMenuBar *menuBar;
     QMenu *menuCalls;
     QMenu *menuTools;
     QMenu *menuHelp;
     QMenu *menusend;
-    QToolBar *mainToolBar;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -91,6 +93,41 @@ public:
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        QFont font;
+        font.setPointSize(16);
+        label_3->setFont(font);
+        label_3->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(label_3);
+
+        label_port1 = new QLabel(centralWidget);
+        label_port1->setObjectName(QString::fromUtf8("label_port1"));
+        QFont font1;
+        font1.setPointSize(14);
+        label_port1->setFont(font1);
+
+        verticalLayout->addWidget(label_port1);
+
+        label_port2 = new QLabel(centralWidget);
+        label_port2->setObjectName(QString::fromUtf8("label_port2"));
+        label_port2->setFont(font1);
+
+        verticalLayout->addWidget(label_port2);
+
+        label_port3 = new QLabel(centralWidget);
+        label_port3->setObjectName(QString::fromUtf8("label_port3"));
+        label_port3->setFont(font1);
+
+        verticalLayout->addWidget(label_port3);
+
+        label_port4 = new QLabel(centralWidget);
+        label_port4->setObjectName(QString::fromUtf8("label_port4"));
+        label_port4->setFont(font1);
+
+        verticalLayout->addWidget(label_port4);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -104,12 +141,6 @@ public:
         menusend = new QMenu(menuBar);
         menusend->setObjectName(QString::fromUtf8("menusend"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuCalls->menuAction());
         menuBar->addAction(menuTools->menuAction());
@@ -126,10 +157,6 @@ public:
         menusend->addAction(actionSend);
         menusend->addAction(actionRead);
         menusend->addAction(actionTimer);
-        mainToolBar->addAction(actionConnect);
-        mainToolBar->addAction(actionDisconnect);
-        mainToolBar->addAction(actionConfigure);
-        mainToolBar->addAction(actionClear);
 
         retranslateUi(MainWindow);
 
@@ -191,6 +218,11 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionTimer->setToolTip(QApplication::translate("MainWindow", "startTimer", nullptr));
 #endif // QT_NO_TOOLTIP
+        label_3->setText(QApplication::translate("MainWindow", "\350\257\267\345\260\206\345\215\241\351\235\240\350\277\221\350\256\276\345\244\207", nullptr));
+        label_port1->setText(QApplication::translate("MainWindow", "1\345\217\267: \347\251\272\351\227\262", nullptr));
+        label_port2->setText(QApplication::translate("MainWindow", "2\345\217\267: \347\251\272\351\227\262", nullptr));
+        label_port3->setText(QApplication::translate("MainWindow", "3\345\217\267: \347\251\272\351\227\262", nullptr));
+        label_port4->setText(QApplication::translate("MainWindow", "4\345\217\267: \347\251\272\351\227\262", nullptr));
         menuCalls->setTitle(QApplication::translate("MainWindow", "File", nullptr));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", nullptr));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", nullptr));
