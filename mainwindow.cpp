@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "console.h"
 #include "settingsdialog.h"
+#include "MyDialog.h"
 
 #include <QLabel>
 #include <QMessageBox>
@@ -17,13 +18,12 @@ MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_status(new QLabel),
-    m_console(new Console),
+    // m_console(new Console),
     m_settings(new SettingsDialog),
     m_serial(new QSerialPort(this)) {
-
     m_ui->setupUi(this);
-    m_console->setEnabled(false);
-    setCentralWidget(m_console);
+    // m_console->setEnabled(false);
+    // setCentralWidget(m_console);
 
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(m_serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(m_serial, SIGNAL(readyRead()), this, SLOT(readData()));
     //connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
-    connect(m_console, &Console::getData, this, &MainWindow::writeData);
+    // connect(m_console, &Console::getData, this, &MainWindow::writeData);
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(handletimeout()));
 }
@@ -57,8 +57,8 @@ void MainWindow::openSerialPort() {
     m_serial->setStopBits(p.stopBits);
     m_serial->setFlowControl(p.flowControl);
     if (m_serial->open(QIODevice::ReadWrite)) {
-        m_console->setEnabled(true);
-        m_console->setLocalEchoEnabled(p.localEchoEnabled);
+        // m_console->setEnabled(true);
+        // m_console->setLocalEchoEnabled(p.localEchoEnabled);
         m_ui->actionConnect->setEnabled(false);
         m_ui->actionDisconnect->setEnabled(true);
         m_ui->actionConfigure->setEnabled(false);
@@ -76,7 +76,7 @@ void MainWindow::openSerialPort() {
 void MainWindow::closeSerialPort() {
     if (m_serial->isOpen())
         m_serial->close();
-    m_console->setEnabled(false);
+    // m_console->setEnabled(false);
     m_ui->actionConnect->setEnabled(true);
     m_ui->actionDisconnect->setEnabled(false);
     m_ui->actionConfigure->setEnabled(true);
@@ -106,7 +106,7 @@ void MainWindow::readData() {
     if (str.contains("ID")) {
         // str="ID: AAAAAAAA";截取卡号从ID开始数起
         str = str.mid(str.indexOf("ID") + 4, 8);
-        m_console->putData(str);
+        // m_console->putData(str);
     }
     getUserInfo(str);
 }
@@ -123,7 +123,7 @@ void MainWindow::initActionsConnections() {
     connect(m_ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeSerialPort);
     connect(m_ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
     connect(m_ui->actionConfigure, &QAction::triggered, m_settings, &SettingsDialog::show);
-    connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
+    //connect(m_ui->actionClear, &QAction::triggered, m_console, &Console::clear);
     connect(m_ui->actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(m_ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
@@ -142,13 +142,12 @@ void MainWindow::sendTest() {
 
 void MainWindow::readTest() {
     QByteArray data = m_serial->readAll();
-    m_console->putData(data);
+    // m_console->putData(data);
     this->writeData(data);
 }
 
 void MainWindow::timerTest() {
     static bool timerState = false;
-
     timerState = !timerState;
     if (timerState) {
         if (this->m_serial->isOpen()) {
@@ -163,7 +162,7 @@ void MainWindow::timerTest() {
 }
 
 void MainWindow::getUserInfo(QString cardID) {
-    // 通过Get请求获取数据
+    // 通过Post请求获取数据
     QNetworkAccessManager* manager = new QNetworkAccessManager();
     QNetworkRequest request;
     request.setUrl(QUrl("http://localhost:8084/user/findUserByUserCardId"));
@@ -182,10 +181,13 @@ void MainWindow::getUserInfo(QString cardID) {
             QJsonObject jsonObj = jsonDoc.object();
             QString name = jsonObj.value("userName").toString();
             // QMessageBox::information(nullptr, "提示", responseData);
-            m_console->putData("\n" + responseData);
+            // m_console->putData("\n" + responseData);
+            MyDialog dialog(jsonObj);
+            dialog.exec();
         }
         else {
-            m_console->putData(QString("请求失败"));
+            QMessageBox::information(nullptr, "提示", "请求失败");
+            // m_console->putData(QString("请求失败"));
         }
         reply->deleteLater();
         // 继续接收

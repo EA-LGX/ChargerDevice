@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include "MyDialog.h"
 #include <QApplication>
 #include <QTextCodec>
 
@@ -11,9 +11,12 @@ int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
     // 设置程序中文编码
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
+    QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForLocale(codec);
 
     MainWindow w;
     w.show();
+
+    // MyDialog dialog("12345678");
     return a.exec();
 }

@@ -7,17 +7,17 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     settingsdialog.cpp \
-    console.cpp
+    console.cpp 
 
 HEADERS += \
     mainwindow.h \
     settingsdialog.h \
-    console.h
+    console.h \
+    MyDialog.h
 
 FORMS += \
     mainwindow.ui \
-    settingsdialog.ui \
-    waitforcard.ui
+    settingsdialog.ui 
 
 RESOURCES += \
     SerialPort.qrc

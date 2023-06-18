@@ -18,7 +18,6 @@
 #include <QUrl>
 #include <QEventLoop>
 
-
 QT_BEGIN_NAMESPACE
 
 class QLabel;
@@ -32,8 +31,7 @@ QT_END_NAMESPACE
 class Console;
 class SettingsDialog;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -64,7 +62,7 @@ private:
 
     Ui::MainWindow* m_ui = nullptr;
     QLabel* m_status = nullptr;
-    Console* m_console = nullptr;
+    // Console* m_console = nullptr;
     SettingsDialog* m_settings = nullptr;
     QSerialPort* m_serial = nullptr;
 
