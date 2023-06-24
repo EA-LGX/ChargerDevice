@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "qdialog": "cpp",
-        "qstring": "cpp"
+        "qstring": "cpp",
+        "qmqttclient": "cpp",
+        "qmqttsubscription": "cpp"
     }
 }

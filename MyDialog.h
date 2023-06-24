@@ -90,7 +90,7 @@ public:
             // 通过Post请求获取数据
             QNetworkAccessManager* manager = new QNetworkAccessManager();
             QNetworkRequest request;
-            request.setUrl(QUrl("http://localhost:8084/cost/charge"));
+            request.setUrl(QUrl("http://192.168.31.138:8084/cost/charge"));
             request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
             QJsonObject json;
 

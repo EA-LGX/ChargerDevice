@@ -17,6 +17,7 @@
 #include <QNetworkRequest>
 #include <QUrl>
 #include <QEventLoop>
+#include <QMqttClient>
 
 QT_BEGIN_NAMESPACE
 
@@ -55,6 +56,8 @@ private slots:
 
 private:
     void initActionsConnections();
+    void setBeepState(int status);          // 设置蜂鸣器状态
+    void setLEDState(QString index,int status);
 
 private:
     void showStatusMessage(const QString& message);
@@ -68,6 +71,8 @@ private:
     QSerialPort* m_serial = nullptr;
 
     QTimer* timer;
+    QTimer* timer1;
+    QMqttClient* m_client;
 };
 
 #endif // MAINWINDOW_H
