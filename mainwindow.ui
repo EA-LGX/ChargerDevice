@@ -19,7 +19,8 @@
      <widget class="QLabel" name="label_3">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <family>Agency FB</family>
+        <pointsize>20</pointsize>
        </font>
       </property>
       <property name="text">
@@ -34,7 +35,8 @@
      <widget class="QLabel" name="label_port1">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <family>Agency FB</family>
+        <pointsize>18</pointsize>
        </font>
       </property>
       <property name="text">
@@ -46,7 +48,8 @@
      <widget class="QLabel" name="label_port2">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <family>Agency FB</family>
+        <pointsize>18</pointsize>
        </font>
       </property>
       <property name="text">
@@ -58,7 +61,8 @@
      <widget class="QLabel" name="label_port3">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <family>Agency FB</family>
+        <pointsize>18</pointsize>
        </font>
       </property>
       <property name="text">
@@ -70,7 +74,8 @@
      <widget class="QLabel" name="label_port4">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <family>Agency FB</family>
+        <pointsize>18</pointsize>
        </font>
       </property>
       <property name="text">

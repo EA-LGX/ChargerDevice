@@ -258,13 +258,18 @@ void MainWindow::getUserInfo(QString cardID) {
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error() == QNetworkReply::NoError) {
             QString responseData = reply->readAll();
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(responseData.toUtf8());
-            QJsonObject jsonObj = jsonDoc.object();
-            QString name = jsonObj.value("userName").toString();
-            // QMessageBox::information(nullptr, "提示", responseData);
-            // m_console->putData("\n" + responseData);
-            MyDialog dialog(jsonObj);
-            dialog.exec();
+            if (!responseData.contains("userAccount")) {
+                QString sendBody = "{\"userCardId\":\"" + cardID + "\"}";
+                QMessageBox::information(nullptr, "提示", "还没有绑定卡,打开手机进行绑定");
+                if (m_client->publish(QString("toAndroidCardBinding/1001"), sendBody.toUtf8()) == -1)
+                    QMessageBox::critical(this, QLatin1String("Error"), QLatin1String("Could not publish message"));
+            }
+            else {
+                QJsonDocument jsonDoc = QJsonDocument::fromJson(responseData.toUtf8());
+                QJsonObject jsonObj = jsonDoc.object();
+                MyDialog dialog(jsonObj);
+                dialog.exec();
+            }
         }
         else {
             QMessageBox::information(nullptr, "提示", "请求失败");
@@ -273,7 +278,6 @@ void MainWindow::getUserInfo(QString cardID) {
         reply->deleteLater();
         // 继续接收
         m_serial->open(QIODevice::ReadWrite);
-        getCurrentAvailabel();
         });
 }
 

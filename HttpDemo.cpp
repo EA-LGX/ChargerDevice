@@ -34,7 +34,7 @@ HttpDemo::HttpDemo(QWidget* parent)
     splitter2->addWidget(btn);
 
     QObject::connect(btn, &QPushButton::clicked, [=]() {
-        getData("http://localhost:8084/user/findAll");
+        getData("http://192.168.31.138:8084/user/findAll");
         });
 
     QTextEdit* label3 = new QTextEdit("right Widget");

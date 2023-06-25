@@ -3,6 +3,13 @@
         "qdialog": "cpp",
         "qstring": "cpp",
         "qmqttclient": "cpp",
-        "qmqttsubscription": "cpp"
+        "qmqttsubscription": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp"
     }
 }

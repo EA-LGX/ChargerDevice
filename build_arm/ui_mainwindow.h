@@ -96,7 +96,8 @@ public:
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         QFont font;
-        font.setPointSize(16);
+        font.setFamily(QString::fromUtf8("Agency FB"));
+        font.setPointSize(20);
         label_3->setFont(font);
         label_3->setAlignment(Qt::AlignCenter);
 
@@ -105,7 +106,8 @@ public:
         label_port1 = new QLabel(centralWidget);
         label_port1->setObjectName(QString::fromUtf8("label_port1"));
         QFont font1;
-        font1.setPointSize(14);
+        font1.setFamily(QString::fromUtf8("Agency FB"));
+        font1.setPointSize(18);
         label_port1->setFont(font1);
 
         verticalLayout->addWidget(label_port1);
